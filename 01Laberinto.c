@@ -1,3 +1,4 @@
+
 //MATERIA: LENGUAJE ENSAMBLADOR
 //PROYECTO FINAL: LABERINTO
 //MATERIA: LENGUAJE ENSAMBLADOR
@@ -24,9 +25,13 @@ typedef struct {
     int columnas;
 } Dimensiones;
 
+//funcion en NAMS
+extern void funcionLaberintoASM(char tablero[FILAS][COLUMNAS], int x, int y);
+
 //funcion que imprime el laberinto
 void mostrarLaberinto(char tablero[FILAS][COLUMNAS], int coordenadaX, int coordenadaY, Dimensiones dim) {
     //system("cls");
+    /*
     for (int y = 0; y < dim.filas; y++) {
         printf("\n");
         for (int x = 0; x < dim.columnas; x++) {
@@ -39,6 +44,8 @@ void mostrarLaberinto(char tablero[FILAS][COLUMNAS], int coordenadaX, int coorde
             }
         }//fin for COLUMNAS
     }//fin for FILAS
+    */
+    funcionLaberintoASM(tablero, coordenadaX, coordenadaY);
 }//fin funcion mortrarLaberinto
 
 //funcion que inicaliza el tablero
