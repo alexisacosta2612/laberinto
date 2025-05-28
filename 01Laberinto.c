@@ -26,10 +26,10 @@ typedef struct {
 } Dimensiones;
 
 //funcion en NAMS
-extern void funcionLaberintoASM(char tablero[FILAS][COLUMNAS], int x, int y);
+extern void funcionLaberintoASM(char tablero[FILAS][COLUMNAS], int x, int y, Dimensiones *dimensiones);
 
 //funcion que imprime el laberinto
-void mostrarLaberinto(char tablero[FILAS][COLUMNAS], int coordenadaX, int coordenadaY, Dimensiones dim) {
+void mostrarLaberinto(char tablero[FILAS][COLUMNAS], int coordenadaX, int coordenadaY, Dimensiones *dim) {
     //system("cls");
     /*
     for (int y = 0; y < dim.filas; y++) {
@@ -45,7 +45,7 @@ void mostrarLaberinto(char tablero[FILAS][COLUMNAS], int coordenadaX, int coorde
         }//fin for COLUMNAS
     }//fin for FILAS
     */
-    funcionLaberintoASM(tablero, coordenadaX, coordenadaY);
+    funcionLaberintoASM(tablero, coordenadaX, coordenadaY, dim);
 }//fin funcion mortrarLaberinto
 
 //funcion que inicaliza el tablero
@@ -168,8 +168,7 @@ int main() {
 
         inicializarTablero(tablero, &coordenadaX, &coordenadaY, &salidaX, &salidaY, aleatorio, &dimensionesActuales);
         
-        mostrarLaberinto(tablero, coordenadaX, coordenadaY, dimensionesActuales);
-            
+        mostrarLaberinto(tablero, coordenadaX, coordenadaY, &dimensionesActuales);            
 
 
 
