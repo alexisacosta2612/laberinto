@@ -59,7 +59,7 @@ void inicializarTablero(char tablero[FILAS][COLUMNAS], int *coordenadaX, int *co
         case 0:
             dimensiones->filas = 10;                    //guarda las dimensiones del tablero
             dimensiones->columnas = 28;
-            printf("\nTABLERO 1");
+            printf("\nTABLERO 1\n");
             strcpy(tablero[0],"############################");
             strcpy(tablero[1],"#P.........#...............#");
             strcpy(tablero[2],"##########.#.#############.#");
@@ -74,7 +74,7 @@ void inicializarTablero(char tablero[FILAS][COLUMNAS], int *coordenadaX, int *co
         case 1:
             dimensiones->filas = 14;                    //guarda las dimensiones del tablero
             dimensiones->columnas = 35;
-            printf("\nTABLERO 2");
+            printf("\nTABLERO 2\n");
             strcpy(tablero[0],"#################################");
             strcpy(tablero[1],"#P..............................#");
             strcpy(tablero[2],"#.#####.#######################.#");
@@ -93,7 +93,7 @@ void inicializarTablero(char tablero[FILAS][COLUMNAS], int *coordenadaX, int *co
         case 2:
             dimensiones->filas = 15;                    //guarda las dimensiones del tablero
             dimensiones->columnas = 38;
-            printf("\nTABLERO 3");
+            printf("\nTABLERO 3\n");
             strcpy(tablero[0],"######################################");
             strcpy(tablero[1],"#X..................####.##.####.....#");
             strcpy(tablero[2],"##.###.##.##.##.#.#.##...........###.#");
@@ -113,7 +113,7 @@ void inicializarTablero(char tablero[FILAS][COLUMNAS], int *coordenadaX, int *co
         case 3:
             dimensiones->filas = 21;                    //guarda las dimensiones del tablero
             dimensiones->columnas = 48;
-            printf("\nTABLERO 4");
+            printf("\nTABLERO 4\n");
             strcpy(tablero[0], "################################################");
             strcpy(tablero[1], "#P....#..#.....#.....#.....#.....#..#..........#");
             strcpy(tablero[2], "#.###.#.##.####.#.###.#.###.#.#.#...####.#####.#");
@@ -172,9 +172,7 @@ int main() {
 
 
 
-
-
-
+        system("pause");
         printf("\n¿Jugar de nuevo? (S/N): ");
         tecla = toupper(_getch()); 
     }while (tecla == 'S'); //ciclo verfica que se desea continuar
