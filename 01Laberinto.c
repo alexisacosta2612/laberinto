@@ -156,6 +156,37 @@ void inicializarTablero(char tablero[FILAS][COLUMNAS], int *coordenadaX, int *co
     }//fin for FILAS
 }//fin funcion inicializarTablero 
 
+//funcion que verifica si el moviento tecleado cumple con las condiciones
+bool teclaValida(char tablero[FILAS][COLUMNAS], int x, int y, Dimensiones dim){
+    //verifica que P no pase del limite de columnas o filas
+    if (x < 0 || x >= dim.columnas || y < 0 || y >= dim.filas)
+        return false;
+
+    //retorna true si la posicion contine '.' o 'X'
+    return (tablero[y][x] == '.' || tablero[y][x] == 'X');
+}//fin funcion teclaValida
+
+//funcion que mueve al jugador, guarda coordenadas y mantiene el control de la direccion
+void teclaMover(char tablero[FILAS][COLUMNAS], int *coordenadaX, int *coordenadaY, 
+               char direccion, Dimensiones dim){
+    int nuevoX = *coordenadaX;                      //inicializa coordenadas
+    int nuevoY = *coordenadaY;                      //inicializa coordenadas
+
+    //cambia la coordenada segun la tecla
+    switch (direccion) {
+        case 'W': nuevoY--; break;
+        case 'S': nuevoY++; break;
+        case 'A': nuevoX--; break;
+        case 'D': nuevoX++; break;
+    }
+
+    //se valida el nuevon movimiento
+    if(teclaValida(tablero, nuevoX, nuevoY, dim)){
+        *coordenadaX = nuevoX;
+        *coordenadaY = nuevoY;
+    }
+}//fin funcion teclaMover
+
 int main() {
     srand(time(NULL));
     char tablero[FILAS][COLUMNAS];                    //almacena matriz del tablero
@@ -163,20 +194,72 @@ int main() {
     char tecla;                                       //almacena que tecla es la que se presiona
     Dimensiones dimensionesActuales;                  //almacena la dimensiones del tablero
 
+    //configura consola para UTF-8
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+
+    //do si el jugador quiere seguir jugando
     do{
       	int aleatorio = 0 + rand() % (5 - 0 + 1);     //aleatorio para escoger tablero
 
+        //llama a la funcion para tener control de los tableros
         inicializarTablero(tablero, &coordenadaX, &coordenadaY, &salidaX, &salidaY, aleatorio, &dimensionesActuales);
         
-        mostrarLaberinto(tablero, coordenadaX, coordenadaY, &dimensionesActuales);            
+        bool jugador = true;                        //variable bool, controla el estado del jugador
 
+        //while, actualiza la pantalla en cada movimiento y verifica si alguna condicion se cumple
+        while(jugador){
+            system("cls");
+            printf("\nJUEGO LABERINTO");
+            printf("\nINSTRUCCIONES: EL JUGADOR (P) DEBE ENCONTRAR LA SALIDA (X) DEL LABERINTO");
+	        printf("\nCONTROLES: W - ARRIBA, S - ABAJO, A - IZQUIERDA, D - DERECHA, R - REINICIAR, Q - SALIR");
+	        printf("\n");
 
+            mostrarLaberinto(tablero, coordenadaX, coordenadaY, &dimensionesActuales);            
+            
+            //verifica si las coordenadas de P coinciden con las coordenas X
+            //si son iguales significa que se llego a la salida del laberinto
+            //jugador cambia a false por la cual se manda a la pregunta del do-while 
+            if (coordenadaX == salidaX && coordenadaY == salidaY){
+                system("cls");
+                printf("\nFELICIDADES GANASTE");
+                jugador = false;
+                break;
+            }//fin if
 
-        system("pause");
+            //recibe la tecla tecleada
+            tecla = _getch();
+            tecla = toupper(tecla);
+
+            //segun la tecla se ejerce lo pedido
+            switch (tecla){
+                //teclas para mover P
+                case 'W': case 'A': case 'S': case 'D':
+                    teclaMover(tablero, &coordenadaX, &coordenadaY, tecla, dimensionesActuales);
+                    break;
+                //tecla para reiniciar 
+                case 'R':
+                    jugador = false;
+                    break;
+                //tecla para salir
+                case 'Q':
+                    system("cls");
+                    printf("\nGRACIAS POR JUGAR");
+                    return 0;
+                default:
+                    printf("\nTecla no valida. Usa WASD para moverte.");
+                    break;
+            }//fin switch
+        }//fin while
+
         printf("\n¿Jugar de nuevo? (S/N): ");
         tecla = toupper(_getch()); 
+
+        while (tecla != 'S' && tecla != 'N') {
+            printf("\nEntrada invalida. Por favor, presiona 'S' o 'N': ");
+            tecla = toupper(_getch());
+        }
     }while (tecla == 'S'); //ciclo verfica que se desea continuar
 
     return 0;
 }//fin main
-
